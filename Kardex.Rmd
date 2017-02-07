@@ -1,0 +1,48 @@
+---
+title: "Kardex"
+author: "Erick Arellano"
+date: "7 de febrero de 2017"
+output: html_document
+---
+
+ 
+### Otoño 2014
+ 
+- Programación Actuarial I............06
+- Intro. a la Profesión Actuarial.....05
+- DHPC................................09
+- Conceptos de Cálculo................07
+- Problemas de Mat. Básicas...........07
+- Problemas de Mat. Básicas...........07
+
+### Primavera 2015
+ 
+- Teoria del Interes I................06
+-	Microeconomia.......................09	
+- Programacion Actuarial II...........05
+- Calculo Diferencial.................07
+- Geometria Analitica.................08	
+- Teoria de Ecuaciones................05	
+
+### Otoño 2015
+
+- Teoria de Ecuaciones................07
+- Teoria del Interes II...............08	
+- Contabilidad General................08	
+- Intr. a la Profecion Act............08
+- Calculo Integral....................05	
+
+### Primavera 2016
+
+- Programacion Actuarial II...........08
+- Algebra lineal......................08
+- Macroeconomia.......................09	
+- Calculo Integral....................05
+
+### Otoño 2016
+
+- Lengua Extrangera I.................09	
+- Formacion Humana y Social...........08
+- DHTIC...............................10	
+- Calculo Integral....................10
+- Intr. a las Estr. Algebraicas.......09
