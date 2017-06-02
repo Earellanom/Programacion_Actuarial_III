@@ -1,8 +1,12 @@
 mejor <- function(estado,resultado){
    
      if(file.exists("outcome-of-care-measures.csv") == F){
-        stop("No existe la base de datos en el directorio." )
-        break
+        if (file.exists("Calidad de Hospitales - data")==T){
+            setwd("./Calidad de Hospitales - data")
+        }else{
+            stop("No existe la base de datos en el directorio." )
+            break 
+        }
     }
     
     outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
@@ -32,10 +36,7 @@ mejor <- function(estado,resultado){
         }else{
             
             tabla <- cbind(outcome[,2],outcome[,7],outcome[,23])
-           
         }
-        
-        
     }
     
  
@@ -48,7 +49,6 @@ mejor <- function(estado,resultado){
     filtro4 <- cbind(filtro2[(filtro2[,2] == min(filtro3)  ),1])
     data.frame(filtro4)
     sort(filtro4)[1]
-    
-  
 }
+
 mejor("MD","neumonia")

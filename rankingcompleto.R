@@ -1,4 +1,4 @@
-rankhospital <- function(estado,resultado,num){
+rankall <- function(resultado,num = "mejor"){
     
     if(file.exists("outcome-of-care-measures.csv") == F){
         if (file.exists("Calidad de Hospitales - data")==T){
@@ -11,11 +11,6 @@ rankhospital <- function(estado,resultado,num){
     
     outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
     state <- names( split(outcome$State,outcome$State))
-  
-    if((estado %in% state) == F ){
-        stop("Estado invalido.")
-        break
-    }
     
     if((resultado != "ataque") && (resultado != "falla") && (resultado 
                                                              != "neumonia")){
@@ -29,9 +24,11 @@ rankhospital <- function(estado,resultado,num){
         break
     }
     
+    
     if (resultado == "ataque"){
         
         tabla <- cbind(outcome[,2],outcome[,7],outcome[,11])
+        
     }else{
         
         if (resultado == "falla"){
@@ -43,25 +40,33 @@ rankhospital <- function(estado,resultado,num){
         }
     }
     
-    filtro1 <- cbind((tabla[(tabla[,2] == estado),1]),(tabla[(tabla[,2] == estado),3]))
+    completo <- data.frame()
     
-    filtro2 <- cbind(filtro1[(filtro1[,2] != "Not Available"),1],
-                     as.numeric(filtro1[(filtro1[,2] != "Not Available"),2]))
-    filtro3 <- sort(as.numeric(filtro2[,2]))
-    
-    if(num == "mejor"){
-        num <- 1
+    for (estado in state){
+        filtro1 <- cbind((tabla[(tabla[,2] == estado),1]),(tabla[(tabla[,2] == 
+                                                                      estado),3]))
+        
+        filtro2 <- cbind(filtro1[(filtro1[,2] != "Not Available"),1],
+                         as.numeric(filtro1[(filtro1[,2] != "Not Available"),2]))
+        filtro3 <- sort(as.numeric(filtro2[,2]))
+        
+        if(num == "mejor"){
+            num <- 1
+        }
+        
+        if(num == "peor"){
+            num <- length(filtro3)
+        }
+        
+        filtro4 <- cbind(filtro2[(as.numeric(filtro2[,2]) <= (filtro3[num])  ),1],
+                         filtro2[(as.numeric(filtro2[,2]) <= (filtro3[num])  ),2])
+        x <- length(cbind(filtro4[(as.numeric(filtro4[,2]) < (filtro3[num])  ),1]))
+        filtro5 <- cbind(filtro4[(as.numeric(filtro4[,2]) == (filtro3[num])  ),1])
+        data.frame(filtro5)
+        hospital <- sort(filtro5)[num-x]
+        completo <- rbind(completo,cbind(hospital,estado))
     }
-    
-    if(num == "peor"){
-        num <- length(filtro3)
-    }
-    
-    filtro4 <- cbind(filtro2[(as.numeric(filtro2[,2]) <= (filtro3[num])  ),1],
-                     filtro2[(as.numeric(filtro2[,2]) <= (filtro3[num])  ),2])
-   x <- length(cbind(filtro4[(as.numeric(filtro4[,2]) < (filtro3[num])  ),1]))
-    filtro5 <- cbind(filtro4[(as.numeric(filtro4[,2]) == (filtro3[num])  ),1])
-    data.frame(filtro5)
-    sort(filtro5)[num-x]
+    row.names(completo) <- completo[,2]
+    completo
 }
-rankhospital("WY","neumonia","peor")
+tail(rankall("falla"),10)
