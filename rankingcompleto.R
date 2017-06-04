@@ -41,7 +41,7 @@ rankall <- function(resultado,num = "mejor"){
     }
     
     completo <- data.frame()
-    
+    guardanum <- num
     for (estado in state){
         filtro1 <- cbind((tabla[(tabla[,2] == estado),1]),(tabla[(tabla[,2] == 
                                                                       estado),3]))
@@ -65,8 +65,10 @@ rankall <- function(resultado,num = "mejor"){
         data.frame(filtro5)
         hospital <- sort(filtro5)[num-x]
         completo <- rbind(completo,cbind(hospital,estado))
+        num <- guardanum
     }
     row.names(completo) <- completo[,2]
     completo
 }
-tail(rankall("falla"),10)
+head(rankall("ataque",20),10)
+
